@@ -1,0 +1,29 @@
+#Get the data directory variable located
+export ARCH_STRUCT_DATA_DIR="/home/jameszd/DissertationProjects/ArchaeoStruct"
+
+#Command To Run Docker with nvidia and set up data directory
+sudo docker run --runtime=nvidia -it --ipc=host -v ${ARCH_STRUCT_DATA_DIR}:/opt/data archstruct
+
+#In the docker container, setup the data varibles
+export RAW_URI="/opt/data/Imagery"
+export PROCESSED_URI="/opt/data/Processed"
+export ROOT_URI="/opt/data/output"
+
+#In the docker container, run the pipeline using the above variables
+rastervision run local rastervision.arch_struct_ext.ArchaeoStruct_Pipeline2 \
+-a raw_uri $RAW_URI -a processed_uri $PROCESSED_URI -a root_uri $ROOT_URI \
+-a test False --splits=5
+
+
+
+
+
+
+#In the docker container, setup the data varibles
+export RAW_URI="/opt/data/Imagery"
+export PROCESSED_URI="/opt/data/Processed"
+export ROOT_URI="/opt/data/output"
+export MODULE_URI="/opt/src/code"
+
+#In the docker container, run the pipeline using the above variables
+rastervision run local rastervision.arch_struct_ext.ArchaeoStruct_Pipeline2 -a raw_uri $RAW_URI -a processed_uri $PROCESSED_URI -a root_uri $ROOT_URI -a external_module_uri $MODULE_URI -a test False --splits=20
